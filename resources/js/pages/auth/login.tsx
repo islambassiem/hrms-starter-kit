@@ -36,20 +36,21 @@ export default function Login({
             >
                 {({ processing, errors }) => (
                     <>
+                    {console.log(errors)}
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
+                                <Label htmlFor="email">Employment Number</Label>
                                 <Input
-                                    id="email"
-                                    type="email"
-                                    name="email"
+                                    id="employee_id"
+                                    type="text"
+                                    name="employee_id"
                                     required
                                     autoFocus
                                     tabIndex={1}
                                     autoComplete="email"
-                                    placeholder="email@example.com"
+                                    placeholder="50xxxx"
                                 />
-                                <InputError message={errors.email} />
+                                <InputError message={errors.employee_id} />
                             </div>
 
                             <div className="grid gap-2">

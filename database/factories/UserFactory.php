@@ -25,6 +25,7 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
+            'employee_id' => fake()->unique()->numerify('500###'),
             'email_verified_at' => now(),
             'password' => static::$password ??= 'password',
             'remember_token' => Str::random(10),
@@ -53,6 +54,13 @@ class UserFactory extends Factory
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
             'two_factor_confirmed_at' => null,
+        ]);
+    }
+
+    public function withoutRememberToken(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'remember_token' => null,
         ]);
     }
 }
