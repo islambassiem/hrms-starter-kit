@@ -86,19 +86,19 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         RateLimiter::for('login', function (Request $request) {
-            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
+            $throttleKey = Str::transliterate(Str::lower($request->string(Fortify::username())).'|'.$request->ip());
 
             return Limit::perMinute(5)->by($throttleKey);
         });
     }
 
-    private function login()
+    private function login(): void
     {
         Fortify::authenticateUsing(function (Request $request) {
             $user = User::where('employee_id', $request->employee_id)->first();
 
             if ($user &&
-                Hash::check($request->password, $user->password)) {
+                Hash::check($request->string('password')->toString(), $user->password)) {
                 return $user;
             }
         });
