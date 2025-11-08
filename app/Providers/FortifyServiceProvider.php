@@ -95,7 +95,7 @@ class FortifyServiceProvider extends ServiceProvider
     private function login(): void
     {
         Fortify::authenticateUsing(function (Request $request) {
-            $user = User::where('employee_id', $request->employee_id)->first();
+            $user = User::where('employee_code', $request->employee_code)->first();
 
             if ($user &&
                 Hash::check($request->string('password')->toString(), $user->password)) {

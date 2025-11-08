@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
-import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
 import { Form, Head } from '@inertiajs/react';
@@ -20,7 +19,6 @@ interface LoginProps {
 export default function Login({
     status,
     canResetPassword,
-    canRegister,
 }: LoginProps) {
     return (
         <AuthLayout
@@ -41,16 +39,16 @@ export default function Login({
                             <div className="grid gap-2">
                                 <Label htmlFor="email">Employment Number</Label>
                                 <Input
-                                    id="employee_id"
+                                    id="employee_code"
                                     type="text"
-                                    name="employee_id"
+                                    name="employee_code"
                                     required
                                     autoFocus
                                     tabIndex={1}
                                     autoComplete="email"
                                     placeholder="50xxxx"
                                 />
-                                <InputError message={errors.employee_id} />
+                                <InputError message={errors.employee_code} />
                             </div>
 
                             <div className="grid gap-2">
@@ -98,15 +96,6 @@ export default function Login({
                                 Log in
                             </Button>
                         </div>
-
-                        {canRegister && (
-                            <div className="text-center text-sm text-muted-foreground">
-                                Don't have an account?{' '}
-                                <TextLink href={register()} tabIndex={5}>
-                                    Sign up
-                                </TextLink>
-                            </div>
-                        )}
                     </>
                 )}
             </Form>
