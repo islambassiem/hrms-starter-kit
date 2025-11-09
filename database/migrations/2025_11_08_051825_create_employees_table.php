@@ -1,8 +1,5 @@
 <?php
 
-use App\Enums\GenderEnum;
-use App\Enums\MaritallyEnum;
-use App\Enums\ReligionEnum;
 use App\Enums\VacationEnum;
 use App\Models\Country;
 use App\Models\Insurance;
@@ -55,7 +52,7 @@ return new class extends Migration
             $table->foreignIdFor(Sponsorship::class, 'sponsorship_id')->nullable()->constrained();
             $table->date('joining_date');
             $table->date('resignation_date')->nullable();
-            $table->unsignedTinyInteger('vacation')->default(VacationEnum::ZERO);
+            $table->unsignedTinyInteger('vacation')->default(VacationEnum::ZERO->value);
             $table->foreignIdFor(Needs::class, 'needs_id')->nullable()->constrained();
             $table->foreignIdFor(Insurance::class, 'insurance_id')->nullable()->constrained();
 

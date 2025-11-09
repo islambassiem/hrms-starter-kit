@@ -4,13 +4,13 @@ namespace App\Enums;
 
 use App\Services\TranslationService;
 
-enum GenderEnum: int
+enum LanguageEnum: string
 {
-    case MALE = 1;
-    case FEMALE = 2;
+    case ARABIC = 'ar';
+    case ENGLISH = 'en';
 
     /**
-     * @return array<int>
+     * @return array<string>
      */
     public static function toArray(): array
     {
@@ -30,8 +30,8 @@ enum GenderEnum: int
         $locale = TranslationService::getLocale();
 
         return match ($this) {
-            self::MALE => ['id' => 1, 'name' => $locale === 'en' ? 'Male' : 'ذكر'],
-            self::FEMALE => ['id' => 2, 'name' => $locale === 'en' ? 'Female' : 'انثى'],
+            self::ARABIC => ['id' => 1, 'name' => $locale === 'en' ? 'Arabic' : 'عربي'],
+            self::ENGLISH => ['id' => 2, 'name' => $locale === 'en' ? 'English' : 'انجليزي'],
         };
     }
 }

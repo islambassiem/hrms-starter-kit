@@ -2,6 +2,8 @@
 
 namespace App\Enums;
 
+use App\Services\TranslationService;
+
 enum MaritallyEnum: int
 {
     case SINGLE = 1;
@@ -27,11 +29,13 @@ enum MaritallyEnum: int
      */
     public function label(): array
     {
+        $locale = TranslationService::getLocale();
+
         return match ($this) {
-            self::SINGLE => ['id' => 1, 'name' => app()->getLocale() === 'en' ? 'Single' : 'اعزب'],
-            self::MARRIED => ['id' => 2, 'name' => app()->getLocale() === 'en' ? 'Married' : 'متزوج'],
-            self::OTHER => ['id' => 3, 'name' => app()->getLocale() === 'en' ? 'Other' : 'اخرى'],
-            self::UNDEFINED => ['id' => 3, 'name' => app()->getLocale() === 'en' ? 'Undefined' : 'غير محدد'],
+            self::SINGLE => ['id' => 1, 'name' => $locale === 'en' ? 'Single' : 'اعزب'],
+            self::MARRIED => ['id' => 2, 'name' => $locale === 'en' ? 'Married' : 'متزوج'],
+            self::OTHER => ['id' => 3, 'name' => $locale === 'en' ? 'Other' : 'اخرى'],
+            self::UNDEFINED => ['id' => 3, 'name' => $locale === 'en' ? 'Undefined' : 'غير محدد'],
         };
     }
 }

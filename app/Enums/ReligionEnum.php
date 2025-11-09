@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
+use App\Services\TranslationService;
+
 enum ReligionEnum: int
 {
     case MUSLIM = 1;
@@ -33,15 +35,17 @@ enum ReligionEnum: int
      */
     public function label(): array
     {
+        $locale = TranslationService::getLocale();
+
         return match ($this) {
-            self::MUSLIM => ['id' => '1', 'name' => app()->getLocale() === 'en' ? 'Muslim' : 'مسلم'],
-            self::CHRISTIAN => ['id' => '2', 'name' => app()->getLocale() === 'en' ? 'Christian' : 'مسيحي'],
-            self::JEWISH => ['id' => '3', 'name' => app()->getLocale() === 'en' ? 'Jewish' : 'يهودي'],
-            self::SIKH => ['id' => '4', 'name' => app()->getLocale() === 'en' ? 'Sikh' : 'سيخي'],
-            self::HINDU => ['id' => '5', 'name' => app()->getLocale() === 'en' ? 'Hindu' : 'هندي'],
-            self::BUDDHIST => ['id' => '6', 'name' => app()->getLocale() === 'en' ? 'Buddhist' : 'بودي'],
-            self::OTHER => ['id' => '7', 'name' => app()->getLocale() === 'en' ? 'Other' : 'أخرى'],
-            self::UNDEFINED => ['id' => '8', 'name' => app()->getLocale() === 'en' ? 'Undefined' : 'غير محدد'],
+            self::MUSLIM => ['id' => '1', 'name' => $locale === 'en' ? 'Muslim' : 'مسلم'],
+            self::CHRISTIAN => ['id' => '2', 'name' => $locale === 'en' ? 'Christian' : 'مسيحي'],
+            self::JEWISH => ['id' => '3', 'name' => $locale === 'en' ? 'Jewish' : 'يهودي'],
+            self::SIKH => ['id' => '4', 'name' => $locale === 'en' ? 'Sikh' : 'سيخي'],
+            self::HINDU => ['id' => '5', 'name' => $locale === 'en' ? 'Hindu' : 'هندي'],
+            self::BUDDHIST => ['id' => '6', 'name' => $locale === 'en' ? 'Buddhist' : 'بودي'],
+            self::OTHER => ['id' => '7', 'name' => $locale === 'en' ? 'Other' : 'أخرى'],
+            self::UNDEFINED => ['id' => '8', 'name' => $locale === 'en' ? 'Undefined' : 'غير محدد'],
         };
     }
 }

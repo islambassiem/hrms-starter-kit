@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\LanguageEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('employee_code', 6)->unique();
+            $table->string('prefered_language', 3)->default(LanguageEnum::ARABIC->value);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
