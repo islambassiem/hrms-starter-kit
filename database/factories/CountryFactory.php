@@ -19,7 +19,7 @@ class CountryFactory extends Factory
     {
         return [
             'name_en' => fake()->unique()->country(),
-            'name_ar' => fake()->unique()->country() . ' (AR)',
+            'name_ar' => fake()->unique()->country().' (AR)',
             'code' => fake()->unique()->countryCode(),
             'is_active' => fake()->boolean(20),
             'created_by' => fake()->randomElement([User::inRandomOrder()->first('id')->id, null]),

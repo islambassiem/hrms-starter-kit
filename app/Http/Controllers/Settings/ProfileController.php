@@ -7,7 +7,6 @@ use App\Http\Requests\Settings\ProfileUpdateRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -34,37 +33,23 @@ class ProfileController extends Controller
             return to_route('profile.edit');
         }
 
-        $user->fill($request->validated());
+        /** @var \Illuminate\Http\UploadedFile | null $avatar */
+        $avatar = $request->validated('avatar');
 
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
+        if ($avatar) {
+            $path = public_path('storage/profile/'.$user->employee_code.'.jpeg');
+            if (file_exists($path)) {
+                unlink($path);
+            }
+            $avatar->storeAs('profile', $user->employee_code.'.jpeg', 'public');
         }
+
+        $user->fill([
+            'name' => $request->validated()['name'],
+        ]);
 
         $user->save();
 
-        return to_route('profile.edit');
-    }
-
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'password' => ['required', 'current_password'],
-        ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
-        if ($user) {
-            $user->delete();
-        }
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect('/');
+        return redirect()->route('profile.edit');
     }
 }

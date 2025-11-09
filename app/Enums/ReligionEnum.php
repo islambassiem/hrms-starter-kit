@@ -16,7 +16,7 @@ enum ReligionEnum: int
     case UNDEFINED = 8;
 
     /**
-     * @return array<string>
+     * @return array<int>
      */
     public static function toArray(): array
     {

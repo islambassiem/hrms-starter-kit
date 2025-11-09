@@ -5,7 +5,6 @@ use App\Enums\MaritallyEnum;
 use App\Enums\ReligionEnum;
 use App\Enums\VacationEnum;
 use App\Models\Country;
-use App\Models\Employee;
 use App\Models\Insurance;
 use App\Models\Needs;
 use App\Models\Sponsorship;
@@ -35,10 +34,10 @@ return new class extends Migration
             $table->string('third_name_ar', 20)->nullable();
             $table->string('last_name_ar', 20);
 
-            $table->enum('gender', GenderEnum::cases());
-            $table->enum('maritally', MaritallyEnum::cases())->nullable();
+            $table->unsignedTinyInteger('gender');
+            $table->unsignedTinyInteger('maritally')->nullable();
             $table->foreignIdFor(Country::class, 'nationality_id')->constrained();
-            $table->enum('religion', ReligionEnum::cases())->nullable();
+            $table->unsignedTinyInteger('religion')->nullable();
             $table->string('home_country_id', 20)->nullable();
             $table->date('date_of_birth')->nullable();
             $table->foreignIdFor(Country::class, 'place_of_birth')->nullable()->constrained();
@@ -47,7 +46,7 @@ return new class extends Migration
             $table->string('mobile', 15)->nullable();
             $table->string('personal_email')->nullable();
 
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_active')->default(true)->index();
             $table->boolean('has_salary')->default(true);
             $table->boolean('has_biometric')->default(true);
             $table->boolean('works_on_saturday')->default(false);
@@ -56,10 +55,9 @@ return new class extends Migration
             $table->foreignIdFor(Sponsorship::class, 'sponsorship_id')->nullable()->constrained();
             $table->date('joining_date');
             $table->date('resignation_date')->nullable();
-            $table->enum('vacation', VacationEnum::cases())->default(VacationEnum::ZERO);
+            $table->unsignedTinyInteger('vacation')->default(VacationEnum::ZERO);
             $table->foreignIdFor(Needs::class, 'needs_id')->nullable()->constrained();
             $table->foreignIdFor(Insurance::class, 'insurance_id')->nullable()->constrained();
-
 
             $table->foreignIdFor(User::class, 'created_by')->nullable()->constrained();
             $table->foreignIdFor(User::class, 'updated_by')->nullable()->constrained();

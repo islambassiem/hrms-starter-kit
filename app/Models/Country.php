@@ -10,5 +10,6 @@ class Country extends Model
 {
     /** @use HasFactory<\Database\Factories\CountryFactory> */
     use HasFactory;
+
     use TrackUser;
 }

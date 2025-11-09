@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Hash;
 
 test('password update page is displayed', function () {
     $user = User::factory()->create();
-
     $response = $this
         ->actingAs($user)
         ->get(route('user-password.edit'));

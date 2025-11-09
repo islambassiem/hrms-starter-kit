@@ -9,7 +9,6 @@ enum MaritallyEnum: int
     case OTHER = 3;
     case UNDEFINED = 9;
 
-
     /**
      * @return array<int>
      */
@@ -31,8 +30,8 @@ enum MaritallyEnum: int
         return match ($this) {
             self::SINGLE => ['id' => 1, 'name' => app()->getLocale() === 'en' ? 'Single' : 'اعزب'],
             self::MARRIED => ['id' => 2, 'name' => app()->getLocale() === 'en' ? 'Married' : 'متزوج'],
-            self::MARRIED => ['id' => 3, 'name' => app()->getLocale() === 'en' ? 'Other' : 'اخرى'],
-            self::MARRIED => ['id' => 3, 'name' => app()->getLocale() === 'en' ? 'Undefined' : 'غير محدد'],
+            self::OTHER => ['id' => 3, 'name' => app()->getLocale() === 'en' ? 'Other' : 'اخرى'],
+            self::UNDEFINED => ['id' => 3, 'name' => app()->getLocale() === 'en' ? 'Undefined' : 'غير محدد'],
         };
     }
 }

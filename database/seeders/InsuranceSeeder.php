@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Insurance;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class InsuranceSeeder extends Seeder
@@ -22,7 +21,7 @@ class InsuranceSeeder extends Seeder
             [
                 'code' => '2',
                 'name_en' => 'VIP+',
-                'name_ar' => 'VIP+'
+                'name_ar' => 'VIP+',
             ],
             [
                 'code' => '3',
