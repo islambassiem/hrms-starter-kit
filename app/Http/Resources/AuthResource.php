@@ -20,7 +20,7 @@ class AuthResource extends JsonResource
             return [];
         }
 
-        $user->load('employee');
+        $user->load(['employee', 'roles', 'permissions']);
 
         return [
             'id' => $user->id,
@@ -29,6 +29,8 @@ class AuthResource extends JsonResource
             'initials' => $user->employee?->initials,
             'email' => $user->email,
             'avatar' => asset('storage/profile/'.$user->employee_code.'.jpeg'),
+            'roles' => $user->roles->pluck('name')->toArray(),
+            'permissions' => $user->permissions->pluck('name')->toArray(),
         ];
     }
 }
