@@ -8,7 +8,6 @@ test('password update page is displayed', function () {
     $response = $this
         ->actingAs($user)
         ->get(route('user-password.edit'));
-
     $response->assertStatus(200);
 });
 

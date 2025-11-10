@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Http\Resources\AuthResource;
+use App\Services\TranslationService;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -40,6 +41,8 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => $request->user() ? AuthResource::make($request->user()) : null,
+            'translations' => TranslationService::getTranslations(['dashboard']),
+            'language' => TranslationService::getLocale(),
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
     }

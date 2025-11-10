@@ -11,11 +11,9 @@ class TranslationService
 {
     public static function getLocale(): string
     {
-        if (request()->user()) {
-            return request()->user()->prefered_language;
-        }
-
-        return app()->getLocale();
+        /** @var ?\App\Models\User $user */
+        $user = request()->user();
+        return $user->prefered_language ?? app()->getLocale();
     }
 
     /**
@@ -26,28 +24,44 @@ class TranslationService
         return LanguageEnum::toArray();
     }
 
-    public static function getTranslations(): void
+    /**
+     * @param  array<int, string>  $groups
+     * @return array<string, mixed>
+     */
+    public static function getTranslations(array $groups = []): array
     {
+        if (empty($groups)) {
+            return [];
+        }
+
         $locale = self::getLocale();
-        $files = File::allFiles(base_path("lang/$locale"));
+        $basePath = base_path("lang/$locale");
+
+        if (! File::exists($basePath)) {
+            return [];
+        }
+
+        $files = collect(File::allFiles($basePath))
+            ->filter(fn ($file) => in_array(pathinfo($file->getFilename(), PATHINFO_FILENAME), $groups));
 
         $lastModified = collect($files)->max(fn ($file) => $file->getMTime());
 
-        $cacheKey = "translations.$locale";
+        $cacheKey = "translations.$locale.".implode('.', $groups);
         $lastModifiedKey = "translations_modified.$locale";
 
         if (Cache::get($lastModifiedKey) !== $lastModified) {
             Cache::forget($cacheKey);
         }
 
-        Cache::remember($cacheKey, now()->addYears(), function () use ($lastModifiedKey, $lastModified, $files) {
+        /** @var array<string, mixed> */
+        return Cache::rememberForever($cacheKey, function () use ($lastModifiedKey, $lastModified, $files) {
             Cache::forever($lastModifiedKey, $lastModified);
 
-            return collect($files)->flatMap(function ($file) {
-                $fileContents = File::getRequire($file->getRealPath());
+            return $files->flatMap(function ($file) {
+                $array = File::getRequire($file->getRealPath());
                 $prefix = pathinfo($file->getFilename(), PATHINFO_FILENAME).'.';
 
-                return is_array($fileContents) ? Arr::dot($fileContents, $prefix) : [];
+                return is_array($array) ? Arr::dot($array, $prefix) : [];
             })->toArray();
         });
     }
