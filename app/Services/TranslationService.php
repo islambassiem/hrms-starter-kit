@@ -13,6 +13,7 @@ class TranslationService
     {
         /** @var ?\App\Models\User $user */
         $user = request()->user();
+
         return $user->prefered_language ?? app()->getLocale();
     }
 

@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import './fonts.css';
 
 @import "tw-animate-css";
 
@@ -12,6 +13,11 @@
         'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
+
+    --font-alexandria: 'Alexandria', serif;
+    --font-fustat: 'Fustat', serif;
+    --font-cairo: 'Cairo', serif;
+    --font-playfair: 'playfair', serif;
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);

@@ -46,7 +46,7 @@ export default function Dashboard() {
             iconColor: 'text-amber-600 dark:text-amber-400'
         },
     ];
-    console.log(t('dashboard.title'));
+    console.log(t('common.college_name'));
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -56,7 +56,7 @@ export default function Dashboard() {
                     {/* Welcome Message */}
                     <div className="text-center mb-12">
                         <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-3">
-                            Welcome Back, {auth.data.name.split(' ')[0]}
+                            {t('dashboard.welcome')}, {auth.data.name.split(' ')[0]}
                         </h2>
                         <p className="text-lg text-gray-600 dark:text-slate-400">
                             {t('dashboard.title')}
